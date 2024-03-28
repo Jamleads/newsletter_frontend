@@ -31,11 +31,9 @@ const MarketerLogin = () => {
               inputLabel={"Password"}
             />
 
-            <Link to="/marketer">
-              <button className="bg-primary-mainBlue text-white font-bold px-5 py-2 rounded-md">
-                Login
-              </button>
-            </Link>
+            <button className="bg-primary-mainBlue text-white font-bold px-5 py-2 rounded-md">
+              <Link to="/marketer">Login</Link>
+            </button>
           </div>
           <p className="text-xs mt-2 text-center text-primary-mainBlue">
             Login as an{" "}

@@ -55,11 +55,9 @@ const MarketerSignup = () => {
               inputLabel={"confirm Password"}
             />
 
-            <Link to="/marketer">
-              <button className="bg-primary-mainBlue text-white font-bold px-5 py-2 rounded-md">
-                Sign up
-              </button>
-            </Link>
+            <button className="bg-primary-mainBlue text-white font-bold px-5 py-2 rounded-md">
+              <Link to="/marketer">Sign up</Link>
+            </button>
           </div>
           <p className="text-xs mt-2 text-center text-primary-mainBlue">
             Sign up as an{" "}
