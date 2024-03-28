@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+:root {
+  font-family: "Montserrat", sans-serif;
+
+  background-color: #f1f5f9;
+  color: #000c35;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* FONT */
+.montserrat {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  /* font-weight: <weight>; */
+}
+
+input:focus,
+select:focus {
+  outline: none;
+}
+.onMobilMemu {
+  display: none;
+}
+
+@media (max-width: 488px) {
+  .sidebar {
+    display: none;
+  }
+  .onMobilMemu {
+    display: flex;
+  }
+}
