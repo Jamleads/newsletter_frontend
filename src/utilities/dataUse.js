@@ -3,6 +3,7 @@ import {
   MdOutlineSignpost,
   MdOutlineMapsHomeWork,
 } from "react-icons/md";
+import { FaUserInjured } from "react-icons/fa";
 import { RiDraftLine } from "react-icons/ri";
 import { PiUsersFourDuotone } from "react-icons/pi";
 
@@ -36,6 +37,12 @@ export const sideBarData = [
     pageLink: "/draft",
     pageName: "draft",
     pageIcon: RiDraftLine,
+  },
+  {
+    id: 5,
+    pageLink: "/users",
+    pageName: "users",
+    pageIcon: FaUserInjured,
   },
 ];
 export const dashVeriicationProces = [

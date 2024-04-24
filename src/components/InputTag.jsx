@@ -1,5 +1,12 @@
 /* eslint-disable react/prop-types */
-const InputTag = ({ inputType, inputFor, inputPlaceholder, inputLabel }) => {
+const InputTag = ({
+  inputType,
+  inputFor,
+  inputPlaceholder,
+  inputLabel,
+  inputValue,
+  inputChange,
+}) => {
   return (
     <div>
       <label htmlFor={inputFor} className="capitalize">
@@ -7,6 +14,8 @@ const InputTag = ({ inputType, inputFor, inputPlaceholder, inputLabel }) => {
       </label>
       <br />
       <input
+        value={inputValue}
+        onChange={inputChange}
         id={inputFor}
         name={inputFor}
         type={inputType}

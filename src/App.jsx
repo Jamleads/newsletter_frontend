@@ -6,29 +6,32 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import DashBoard from "./Pages/DashBoard";
-import Layout from "./layouts/Layout";
+import Layout from "./components/layouts/Layout";
 import Subscribers from "./Pages/Subscribers";
 import Campaign from "./Pages/Campaign";
 import Post from "./Pages/Post";
 import ErrorPage from "./components/ErrorPage";
 import Draft from "./Pages/Draft";
+import Users from "./Pages/Users";
+import ProtectedRoute from "./components/layouts/ProtectedRoute";
 
 function App() {
   const routes = createBrowserRouter(
     createRoutesFromElements(
-      <Route to="/" element={<Layout />}>
-        <Route index element={<DashBoard />} />
-        <Route path="/subscribers" element={<Subscribers />} />
-        <Route path="/campaign" element={<Campaign />} />
-        <Route path="/post" element={<Post />} />
-        <Route path="/draft" element={<Draft />} />
-
-        <Route path="errorpage" element={<ErrorPage />} />
-        <Route path="*" element={<Navigate to="/errorpage" />} />
+      <Route element={<ProtectedRoute />}>
+        <Route to="/" element={<Layout />}>
+          <Route index element={<DashBoard />} />
+          <Route path="/subscribers" element={<Subscribers />} />
+          <Route path="/campaign" element={<Campaign />} />
+          <Route path="/post" element={<Post />} />
+          <Route path="/draft" element={<Draft />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="errorpage" element={<ErrorPage />} />
+          <Route path="*" element={<Navigate to="/errorpage" />} />
+        </Route>
       </Route>
     )
   );
-
   return <RouterProvider router={routes} />;
 }
 
