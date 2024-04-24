@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import PageName from "../components/PageName";
-import TopNav from "../client/TopNav";
 import { boardData, dashVeriicationProces } from "../utilities/dataUse";
 import VeriyProcess from "../components/VeriyProcess";
+import TopNav from "./TopNav";
 
 const DashBoard = () => {
   return (

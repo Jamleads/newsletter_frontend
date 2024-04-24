@@ -9,31 +9,31 @@ import { PiUsersFourDuotone } from "react-icons/pi";
 export const sideBarData = [
   {
     id: 1,
-    pageLink: "/marketer",
+    pageLink: "/",
     pageName: "Dashboard",
     pageIcon: MdOutlineMapsHomeWork,
   },
   {
     id: 2,
-    pageLink: "/marketer/subscribers",
+    pageLink: "/subscribers",
     pageName: "subscribers",
     pageIcon: PiUsersFourDuotone,
   },
   {
     id: 3,
-    pageLink: "/marketer/campaign",
+    pageLink: "/campaign",
     pageName: "campaign",
     pageIcon: MdOutlineCampaign,
   },
   {
     id: 4,
-    pageLink: "/marketer/post",
+    pageLink: "/post",
     pageName: "post",
     pageIcon: MdOutlineSignpost,
   },
   {
     id: 5,
-    pageLink: "/marketer/draft",
+    pageLink: "/draft",
     pageName: "draft",
     pageIcon: RiDraftLine,
   },
