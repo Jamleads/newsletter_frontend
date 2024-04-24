@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import { FaChevronLeft } from "react-icons/fa";
 import { TfiMenu } from "react-icons/tfi";
 import { useState } from "react";
-import SideBar from "../../Pages/SideBar";
+import SideBar from "../Pages/SideBar";
 
 const Layout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);

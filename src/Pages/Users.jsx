@@ -1,12 +1,19 @@
 import PageName from "../components/PageName";
-import PaginationComp from "../components/PaginationComp";
-import { dummySubscribers } from "../utilities/dataUse";
 import TopNav from "./TopNav";
 import Button from "../components/Button";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getAllUsers } from "../Feature/GetUserSlice";
+const tHead = "text-[16px] border-r border-gray-400 text-white py-2";
+const tData = "border-r border-gray-400 capitalize py-2";
 
 const Users = () => {
-  const tHead = "text-[16px] border-r border-gray-400 text-white py-2";
-  const tData = "border-r border-gray-400 capitalize py-2";
+  const dispatch = useDispatch();
+  const { status, allUsers } = useSelector((state) => state.allUsers);
+  console.log("on the page", allUsers, status);
+  useEffect(() => {
+    dispatch(getAllUsers());
+  }, [dispatch]);
   return (
     <>
       <div className="nav fixed top-0 right-0 left-0 bg-white shadow-2xl rounded-b-lg px-5 py-2">
@@ -19,7 +26,7 @@ const Users = () => {
 
           <div className="flex items-center justify-end gap-5">
             <p className="text-2xl">Add users</p>
-            <Button btnText={"Add"} />
+            <Button btnText={"Add user"} />
           </div>
 
           <div className="bg-white shadow-xl">
@@ -29,7 +36,7 @@ const Users = () => {
                 <Button btnText={"Admins"} />
                 <Button btnText={"Marketers"} />
               </div>
-              <p>Tota users(1000)</p>
+              <p>Tota users ({allUsers?.length})</p>
             </div>
             <table className="table  divide-y  divide-gray-200 w-full">
               <thead>
@@ -42,27 +49,31 @@ const Users = () => {
                   <th className={`${tHead}`}>Last modified</th>
                 </tr>
               </thead>
-              <tbody>
-                {dummySubscribers.map((item, index) => (
-                  <tr
-                    className={`text-center border-b cursor-pointer`}
-                    key={index}
-                  >
-                    <td className={`${tData}`}>{index + 1}</td>
+              {status === "idle" ? (
+                <tbody>
+                  {allUsers?.map((item, index) => (
+                    <tr
+                      className={`text-center border-b cursor-pointer`}
+                      key={index}
+                    >
+                      <td className={`${tData}`}>{index + 1}</td>
 
-                    <td className={`${tData}`}>{item.firstname}</td>
-                    <td className={`${tData}`}>{item.email}</td>
-                    <td className={`${tData}`}>{"true"}</td>
-                    <td className={`${tData}`}>{"Mateting"}</td>
-                    <td className={`${tData}`}>{item.phoneNmuber}</td>
-                  </tr>
-                ))}
-              </tbody>
+                      <td className={`${tData}`}>{item?.username}</td>
+                      <td className={`${tData}`}>{item?.email}</td>
+                      <td className={`${tData}`}>
+                        {item?.emailVerified === true
+                          ? "Verified"
+                          : "unverified"}
+                      </td>
+                      <td className={`${tData}`}>{item.role}</td>
+                      <td className={`${tData}`}>{item.lastModifiedAt}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              ) : (
+                <p>Loading....</p>
+              )}
             </table>
-
-            <div className="pagination flex items-end justify-end">
-              <PaginationComp />
-            </div>
           </div>
         </div>
       </>

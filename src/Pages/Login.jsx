@@ -7,6 +7,7 @@ import { userlogin } from "../Feature/AuthSlice";
 
 const Login = () => {
   const { status, userInfo, error } = useSelector((state) => state.auth);
+  console.log("status", status);
   const dispatch = useDispatch();
   const [formStae, setFormState] = useState({
     email: "",
@@ -50,7 +51,7 @@ const Login = () => {
             />
             {error && <p className="text-red-500">{error}</p>}
             <button className="bg-primary-mainBlue text-white font-bold px-5 py-2 rounded-md">
-              Login
+              {status === "idle" ? "Login" : "Loading..."}
             </button>
           </div>
         </form>
