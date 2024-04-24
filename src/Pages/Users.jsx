@@ -1,19 +1,20 @@
-import PageName from "../components/PageName";
-import TopNav from "./TopNav";
+import { useEffect, useState } from "react";
 import Button from "../components/Button";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { getAllUsers } from "../Feature/GetUserSlice";
+import PageName from "../components/PageName";
+import { useGetUsersQuery } from "../services/userApi";
+import TopNav from "./TopNav";
 const tHead = "text-[16px] border-r border-gray-400 text-white py-2";
 const tData = "border-r border-gray-400 capitalize py-2";
 
 const Users = () => {
-  const dispatch = useDispatch();
-  const { status, allUsers } = useSelector((state) => state.allUsers);
-  console.log("on the page", allUsers, status);
+  const [allUsers, setAllUsers] = useState([]);
+  const { data, isLoading, isFetching } = useGetUsersQuery();
+
   useEffect(() => {
-    dispatch(getAllUsers());
-  }, [dispatch]);
+    if (isLoading || isFetching) return;
+    setAllUsers(data.data);
+  }, [data, isFetching, isLoading]);
+
   return (
     <>
       <div className="nav fixed top-0 right-0 left-0 bg-white shadow-2xl rounded-b-lg px-5 py-2">
@@ -36,7 +37,7 @@ const Users = () => {
                 <Button btnText={"Admins"} />
                 <Button btnText={"Marketers"} />
               </div>
-              <p>Tota users ({allUsers?.length})</p>
+              <p>Total users ({allUsers?.length})</p>
             </div>
             <table className="table  divide-y  divide-gray-200 w-full">
               <thead>
@@ -49,30 +50,25 @@ const Users = () => {
                   <th className={`${tHead}`}>Last modified</th>
                 </tr>
               </thead>
-              {status === "idle" ? (
-                <tbody>
-                  {allUsers?.map((item, index) => (
-                    <tr
-                      className={`text-center border-b cursor-pointer`}
-                      key={index}
-                    >
-                      <td className={`${tData}`}>{index + 1}</td>
 
-                      <td className={`${tData}`}>{item?.username}</td>
-                      <td className={`${tData}`}>{item?.email}</td>
-                      <td className={`${tData}`}>
-                        {item?.emailVerified === true
-                          ? "Verified"
-                          : "unverified"}
-                      </td>
-                      <td className={`${tData}`}>{item.role}</td>
-                      <td className={`${tData}`}>{item.lastModifiedAt}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              ) : (
-                <p>Loading....</p>
-              )}
+              <tbody>
+                {allUsers?.map((item, index) => (
+                  <tr
+                    className={`text-center border-b cursor-pointer`}
+                    key={index}
+                  >
+                    <td className={`${tData}`}>{index + 1}</td>
+
+                    <td className={`${tData}`}>{item?.username}</td>
+                    <td className={`${tData}`}>{item?.email}</td>
+                    <td className={`${tData}`}>
+                      {item?.emailVerified === true ? "Verified" : "unverified"}
+                    </td>
+                    <td className={`${tData}`}>{item.role}</td>
+                    <td className={`${tData}`}>{item.lastModifiedAt}</td>
+                  </tr>
+                ))}
+              </tbody>
             </table>
           </div>
         </div>

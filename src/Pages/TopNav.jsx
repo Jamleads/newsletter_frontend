@@ -1,6 +1,10 @@
 /* eslint-disable react/prop-types */
 import { TfiMenu } from "react-icons/tfi";
+import { useSelector } from "react-redux";
+
 const TopNav = ({ proileImg }) => {
+  const auth = useSelector((state) => state.auth);
+  console.log("the auth", auth);
   return (
     <div className="flex items-center justify-between">
       <div className="onMobilMemu">
