@@ -9,9 +9,9 @@ export default {
           mainGreen: "#079649",
           testRed: "#ff0000",
         },
-        // secondary: {
-        //   DEFAULT: "#000000",
-        // },
+        secondary: {
+          gray: "#f1f5f9",
+        },
       },
       // fontFamily: {
       //   sans: ["Inter", "sans-serif"],

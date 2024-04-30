@@ -2,10 +2,10 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import InputTag from "../components/InputTag";
 import { setAuthState, setToken } from "../features/authSlice";
 import { useLoginMutation } from "../services/authApi";
+import { errorToast, successToast } from "../utilities/ToastMessages";
 
 const Login = () => {
   const [login, { isLoading }] = useLoginMutation();
@@ -23,7 +23,6 @@ const Login = () => {
     e.preventDefault();
     try {
       const res = await login(formState).unwrap();
-      console.log(res);
 
       localStorage.setItem("token", JSON.stringify(res.data.accessToken));
       localStorage.setItem("user", JSON.stringify(res.data.user));
@@ -33,18 +32,10 @@ const Login = () => {
 
       navigate("/", { replace: true });
 
-      toast.success("Login successfully", {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: true,
-      });
+      successToast("Login successfully");
     } catch (error) {
       console.log(error.data);
-      toast.error(error.data.message, {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: true,
-      });
+      errorToast(error.data.message);
     }
   };
   return (
@@ -74,7 +65,10 @@ const Login = () => {
               inputType={"password"}
               inputLabel={"Password"}
             />
-            <button className="bg-primary-mainBlue text-white font-bold px-5 py-2 rounded-md">
+            <button
+              disabled={isLoading}
+              className="bg-primary-mainBlue text-white font-bold px-5 py-2 rounded-md"
+            >
               {!isLoading ? "Login" : "Loading..."}
             </button>
           </div>
