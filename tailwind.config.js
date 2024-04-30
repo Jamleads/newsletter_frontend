@@ -11,6 +11,7 @@ export default {
         },
         secondary: {
           gray: "#f1f5f9",
+          blue: "#acbdd2",
         },
       },
       // fontFamily: {

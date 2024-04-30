@@ -3,7 +3,7 @@ const Button = ({ btnText, btnClick }) => {
   return (
     <button
       onClick={btnClick}
-      className="px-7 py-2 bg-primary-mainBlue text-white text-sm"
+      className="hover-effect px-7 py-2 bg-primary-mainBlue text-white text-sm"
     >
       {btnText}
     </button>

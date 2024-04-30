@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import InputTag from "../components/InputTag";
 import { useCreateUserMutation } from "../services/userApi";
 import { errorToast, successToast } from "../utilities/ToastMessages";
@@ -37,9 +36,7 @@ const CreateUser = ({ closeForm }) => {
     <>
       <div className="md:w-[50%] mx-auto bg-white flex flex-col gap-10 shadow-lg p-10">
         <div className="text-center text-primary-mainBlue">
-          <Link to="/dashboard">
-            <p className="text-2xl font-bold">Add user</p>
-          </Link>
+          <p className="text-2xl font-bold">Add user</p>
         </div>
 
         <form action="" onSubmit={submitCreate}>

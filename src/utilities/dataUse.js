@@ -45,6 +45,51 @@ export const sideBarData = [
     pageIcon: FaUserInjured,
   },
 ];
+
+export const campaignData = [
+  {
+    id: 1,
+    campaignTitle: "Campaign 1",
+    campaignStatus: "Active",
+    createdBy: "Marketer Username",
+    createdDate: "2021-05-20",
+    lastModifiedDate: "2021-05-20",
+  },
+  {
+    id: 2,
+    campaignTitle: "Campaign 2",
+    campaignStatus: "Daft",
+    createdBy: "Marketer Username",
+    createdDate: "2021-05-20",
+    lastModifiedDate: "2021-05-20",
+  },
+  {
+    id: 3,
+    campaignTitle: "Campaign 3",
+    campaignStatus: "Active",
+    createdBy: "Marketer Username",
+    createdDate: "2021-05-20",
+    lastModifiedDate: "2021-05-20",
+  },
+  {
+    id: 4,
+    campaignTitle: "Campaign 4",
+    campaignStatus: "Active",
+    createdBy: "Marketer Username",
+    createdDate: "2021-05-20",
+    lastModifiedDate: "2021-05-20",
+  },
+  {
+    id: 5,
+    campaignTitle: "Campaign 5",
+    campaignStatus: "Pending",
+    createdBy: "Marketer Username",
+    createdDate: "2021-05-20",
+    lastModifiedDate: "2021-05-20",
+  },
+];
+
+// dummy
 export const dashVeriicationProces = [
   {
     title: "Email veriication",
