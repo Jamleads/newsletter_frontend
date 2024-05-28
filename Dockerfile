@@ -23,4 +23,4 @@ EXPOSE 5173
 ENV SERVER_URL='https://newsletter.esdiacapp.com/api'
 
 # Start the application
-CMD ["npm", "start"]
+CMD ["npm", "run", "dev"]
