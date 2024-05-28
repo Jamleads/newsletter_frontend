@@ -14,3 +14,6 @@ export const api = createApi({
   tagTypes: ["User", "Orders", "ProductCategory", "Products"],
   endpoints: () => ({}),
 });
+
+// https://newsletter.esdiacapp.com/api/v1
+// https://web-newsletter-7d7b9de4bde2.herokuapp.com
