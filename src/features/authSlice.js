@@ -5,16 +5,10 @@ const user = JSON.parse(localStorage.getItem("user"));
 const token = JSON.parse(localStorage.getItem("token"));
 console.log(user, token);
 
-// const initialState = {
-//   user: user ?? null,
-//   token: token ?? "",
-//   isAuthenticated: (!!token && !!user) ?? false,
-// };
-
 const initialState = {
-  user: typeof user !== "undefined" && user !== null ? user : null,
-  token: typeof token !== "undefined" && token !== null ? token : "",
-  isAuthenticated: !!token && !!user,
+  user: user ?? null,
+  token: token ?? "",
+  isAuthenticated: (!!token && !!user) ?? false,
 };
 
 const authSlice = createSlice({
