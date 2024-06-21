@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import TopNav from "./TopNav";
 import PageName from "../components/PageName";
 import Button from "../components/Button";
-import { campaignData } from "../utilities/dataUse";
 import BoardCard from "../components/BoardCard";
 import CampaignForm from "../components/CampaignForm";
 import { useSelector } from "react-redux";
