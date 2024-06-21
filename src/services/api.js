@@ -2,7 +2,8 @@ import { fetchBaseQuery, createApi } from "@reduxjs/toolkit/query/react";
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://newsletter.esdiacapp.com/api/v1/api",
+    // baseUrl: "https://web-newsletter-7d7b9de4bde2.herokuapp.com/api",
+    baseUrl: "http://0.0.0.0:7020/api",
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.token;
       if (token) {

@@ -3,8 +3,11 @@ import PageName from "../components/PageName";
 import { boardData, dashVeriicationProces } from "../utilities/dataUse";
 import VeriyProcess from "../components/VeriyProcess";
 import TopNav from "./TopNav";
+import { useSelector } from "react-redux";
 
 const DashBoard = () => {
+  const state = useSelector((state) => state);
+  console.log("the state", state);
   return (
     <>
       <div className="nav fixed top-0 right-0 left-0 bg-white shadow-2xl rounded-b-lg px-5 py-2">

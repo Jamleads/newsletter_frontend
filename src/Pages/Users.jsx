@@ -5,7 +5,7 @@ import { useGetUsersQuery } from "../services/userApi";
 import TopNav from "./TopNav";
 import CreateUser from "./CreateUser";
 const tHead = "text-[16px] border-r border-gray-400 text-white py-2";
-const tData = "border-r border-gray-400 capitalize py-2";
+const tData = "border-r border-gray-400 py-2";
 
 const Users = () => {
   const [form, setForm] = useState(false);

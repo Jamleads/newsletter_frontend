@@ -1,27 +1,63 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import InputTag from "../components/InputTag";
-// import { errorToast, successToast } from "../utilities/ToastMessages";
+import TextAreaTag from "./TextAreaTag";
+import { useMediaFileUploadMutation } from "../services/mediaApi";
+import { errorToast, successToast } from "../utilities/ToastMessages";
+import { validateForm } from "../utilities/validation";
+import { useCreateCampaignMutation } from "../services/campaignApi";
 
 const CampaignForm = ({ closeForm }) => {
-  const [formState, setFormState] = useState({});
+  const [mediaFileUpload, { isLoading }] = useMediaFileUploadMutation();
+  const [createCampaign, { isLoading: isLoadingCamp }] =
+    useCreateCampaignMutation();
+
+  const [selectedFiles, setSelectedFiles] = useState(null);
+  const [campaignFormState, setCampaignFormState] = useState({
+    name: "",
+    title: "",
+    detail: "",
+    type: "EMAIL",
+  });
+
   const handleChange = (e) => {
     const { id, value } = e.target;
-    setFormState((pre) => ({ ...pre, [id]: value }));
+    setCampaignFormState((pre) => ({ ...pre, [id]: value }));
+  };
+  const handleFileChange = async (e, inputName) => {
+    e.preventDefault();
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.set("file", file);
+    try {
+      const res = await mediaFileUpload(formData).unwrap();
+      setSelectedFiles((prevFiles) => ({
+        ...prevFiles,
+        [inputName]: res.data.id,
+      }));
+    } catch (error) {
+      errorToast(error?.error);
+    }
   };
 
   const submitCreate = async (e) => {
     e.preventDefault();
-    // try {
-    //   const res = await createUser(formState).unwrap();
-    //   successToast("User created successfully");
-    //   setTimeout(() => {
-    //     window.location.reload();
-    //   }, 2000);
-    //   return res;
-    // } catch (error) {
-    //   errorToast(error.data.message);
-    // }
+    !validateForm(campaignFormState) && errorToast("All fields are required");
+    const payLoad = {
+      ...campaignFormState,
+      ...selectedFiles,
+    };
+    try {
+      const res = await createCampaign(payLoad).unwrap();
+      console.log("cretaed campaign", res);
+      successToast("Campaign created successfully");
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+      return res;
+    } catch (error) {
+      errorToast(error.data.message);
+    }
   };
 
   return (
@@ -31,95 +67,90 @@ const CampaignForm = ({ closeForm }) => {
           <p className="text-2xl font-bold">Create Campaign</p>
         </div>
 
-        <form action="" onSubmit={submitCreate} className="flex flex-col gap-5">
+        <form action="" className="flex flex-col gap-5">
           <div className="grid grid-cols-2 gap-10">
             <div className="flex flex-col gap-5">
               <InputTag
                 inputFor={"name"}
-                inputPlaceholder={"Enter name"}
                 inputType={"text"}
+                inputPlaceholder={"Enter name"}
                 inputLabel={"Campaign name"}
+                inputValue={campaignFormState?.name}
+                inputChange={(e) => handleChange(e)}
               />
               <div>
                 <label htmlFor="status" className="capitalize">
-                  Campaign status
+                  Campaign type
                 </label>
                 <br />
                 <select
-                  id="status"
-                  name="status"
+                  id="type"
+                  name="type"
+                  value={campaignFormState.type}
+                  onChange={(e) => handleChange(e)}
                   className="border-[1px] border-primary-mainBlue px-5 py-2 rounded-md bg-transparent w-full mt-2"
                 >
-                  <option value="draft" className="capitalize">
-                    Draft
+                  <option value="EMAIL" className="capitalize">
+                    Email
                   </option>
-                  <option value="pending" className="capitalize">
-                    Pending
-                  </option>
-                  <option value="approved" className="capitalize">
-                    Approved
-                  </option>
-                  <option value="sent" className="capitalize">
-                    sent
-                  </option>
-                  <option value="rejected" className="capitalize">
-                    rejected
-                  </option>
-                  <option value="completed" className="capitalize">
-                    completed
+                  <option value="SMS" className="capitalize">
+                    Sms
                   </option>
                 </select>
               </div>
-              <InputTag
+              {/* <InputTag
                 inputFor={"date"}
                 inputPlaceholder={"Enter date"}
                 inputType={"text"}
                 inputLabel={"Campaign date"}
-              />
+              /> */}
+              <div>
+                <TextAreaTag
+                  textareaName={"detail"}
+                  labelTitle={"Details"}
+                  textareaPlaceholder={"Briefly about campaign details"}
+                  textareaValue={campaignFormState.detail}
+                  textareaOnChange={(e) => handleChange(e)}
+                />
+              </div>
             </div>
             <div className="flex flex-col gap-5">
               <InputTag
                 inputFor={"title"}
-                inputPlaceholder={"Enter title"}
                 inputType={"text"}
+                inputPlaceholder={"Enter title"}
                 inputLabel={"Campaign title"}
+                inputValue={campaignFormState.title}
+                inputChange={(e) => handleChange(e)}
               />
               <InputTag
-                inputFor={"image"}
-                inputPlaceholder={"Add an image"}
+                inputFor={"imageMediaFile"}
                 inputType={"file"}
+                inputPlaceholder={"Add an image"}
                 inputLabel={"Campaign image"}
+                inputChange={(e) => handleFileChange(e, "imageMediaFileId")}
               />
               <InputTag
                 inputFor={"video"}
-                inputPlaceholder={"Add a video"}
                 inputType={"file"}
+                inputPlaceholder={"Add a video"}
                 inputLabel={"Campaign video"}
+                inputChange={(e) => handleFileChange(e, "videoMediaFileId")}
               />
             </div>
           </div>
 
-          <div>
-            <label htmlFor="details" className="capitalize">
-              details
-            </label>
-            <br />
-            <textarea
-              name="details"
-              id="details"
-              className=" w-full h-[350px] border-[1px] border-primary-mainBlue rounded-lg"
-            ></textarea>
-          </div>
-
           <div className=" flex items-center justify-center gap-10">
             <button
-              //   disabled={isLoading}
+              disabled={isLoading || isLoadingCamp}
+              onClick={submitCreate}
               className="bg-primary-mainBlue text-white font-bold px-5 py-2 rounded-md"
             >
               Create campaign
             </button>
 
             <button
+              disabled={isLoading || isLoadingCamp}
               onClick={closeForm}
               className="bg-secondary-gray text-primary-mainBlue border-[1px] font-bold px-5 py-2 rounded-md"
             >
