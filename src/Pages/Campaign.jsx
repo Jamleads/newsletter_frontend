@@ -214,7 +214,11 @@ const Campaign = () => {
                             className="hover-effect text-xs cursor-pointer text-blue-800"
                             onClick={handleApproveCampaign}
                           >
-                            Approve
+                            {isAprovingCamp ? (
+                              <BarsLoader height={20} color={"#f1f5f9"} />
+                            ) : (
+                              "Approve"
+                            )}
                           </p>
                         )}
 
@@ -223,7 +227,11 @@ const Campaign = () => {
                             className="text-xs cursor-pointer text-blue-800"
                             onClick={handleRejectCampaign}
                           >
-                            Reject
+                            {isRejectingCamp ? (
+                              <BarsLoader height={20} color={"#f1f5f9"} />
+                            ) : (
+                              "Reject"
+                            )}
                           </p>
                         )}
 
@@ -241,7 +249,11 @@ const Campaign = () => {
                             className="hover-effect text-xs cursor-pointer text-blue-800"
                             onClick={handlePublishCampaign}
                           >
-                            Publish
+                            {isPublishingCamp ? (
+                              <BarsLoader height={20} color={"#f1f5f9"} />
+                            ) : (
+                              "Publish"
+                            )}
                           </p>
                         )}
 

@@ -91,7 +91,6 @@ const CampaignForm = ({ closeForm, selectedItem, editMode }) => {
       successToast("Campaign updated successfully");
       return res;
     } catch (error) {
-      console.log(":error", error);
       errorToast(error.data?.message);
     }
   };
