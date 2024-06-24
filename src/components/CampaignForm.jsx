@@ -1,16 +1,21 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InputTag from "../components/InputTag";
 import TextAreaTag from "./TextAreaTag";
 import { useMediaFileUploadMutation } from "../services/mediaApi";
 import { errorToast, successToast } from "../utilities/ToastMessages";
 import { validateForm } from "../utilities/validation";
-import { useCreateCampaignMutation } from "../services/campaignApi";
+import {
+  useCreateCampaignMutation,
+  useEditCampaignMutation,
+} from "../services/campaignApi";
 
-const CampaignForm = ({ closeForm }) => {
+const CampaignForm = ({ closeForm, selectedItem, editMode }) => {
   const [mediaFileUpload, { isLoading }] = useMediaFileUploadMutation();
   const [createCampaign, { isLoading: isLoadingCamp }] =
     useCreateCampaignMutation();
+  const [editCampaign, { isLoading: isUpdatingCamp }] =
+    useEditCampaignMutation();
 
   const [selectedFiles, setSelectedFiles] = useState(null);
   const [campaignFormState, setCampaignFormState] = useState({
@@ -42,29 +47,61 @@ const CampaignForm = ({ closeForm }) => {
 
   const submitCreate = async (e) => {
     e.preventDefault();
-    !validateForm(campaignFormState) && errorToast("All fields are required");
     const payLoad = {
       ...campaignFormState,
       ...selectedFiles,
     };
-    try {
-      const res = await createCampaign(payLoad).unwrap();
-      console.log("cretaed campaign", res);
-      successToast("Campaign created successfully");
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
-      return res;
-    } catch (error) {
-      errorToast(error.data.message);
+    if (!validateForm(payLoad)) {
+      errorToast("All fields are required");
+    } else {
+      try {
+        const res = await createCampaign(payLoad).unwrap();
+        successToast("Campaign created successfully");
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+        return res;
+      } catch (error) {
+        errorToast(error.data.message);
+      }
     }
   };
 
+  useEffect(() => {
+    if (selectedItem && editMode) {
+      setCampaignFormState({
+        ...selectedItem,
+      });
+    }
+  }, [editMode, selectedItem]);
+  const submitUpdate = async (e) => {
+    e.preventDefault();
+    const payLoad = {
+      name: campaignFormState?.name,
+      title: campaignFormState?.title,
+      detail: campaignFormState?.detail,
+      type: campaignFormState?.type,
+      ...selectedFiles,
+    };
+    try {
+      const res = await editCampaign({
+        data: payLoad,
+        id: selectedItem?.id,
+      }).unwrap();
+      successToast("Campaign updated successfully");
+      return res;
+    } catch (error) {
+      console.log(":error", error);
+      errorToast(error.data?.message);
+    }
+  };
   return (
     <>
       <div className="md:w-[85%] mx-auto bg-white flex flex-col gap-10 shadow-lg p-10">
         <div className="text-center text-primary-mainBlue">
-          <p className="text-2xl font-bold">Create Campaign</p>
+          <p className="text-2xl font-bold">
+            {editMode ? "Update Campaign" : "Create Campaign"}
+          </p>
         </div>
 
         <form action="" className="flex flex-col gap-5">
@@ -142,15 +179,15 @@ const CampaignForm = ({ closeForm }) => {
 
           <div className=" flex items-center justify-center gap-10">
             <button
-              disabled={isLoading || isLoadingCamp}
-              onClick={submitCreate}
+              disabled={isLoading || isLoadingCamp || isUpdatingCamp}
+              onClick={editMode ? submitUpdate : submitCreate}
               className="bg-primary-mainBlue text-white font-bold px-5 py-2 rounded-md"
             >
-              Create campaign
+              {editMode ? "Update Campaign" : "Create Campaign"}
             </button>
 
             <button
-              disabled={isLoading || isLoadingCamp}
+              disabled={isLoading || isLoadingCamp || isUpdatingCamp}
               onClick={closeForm}
               className="bg-secondary-gray text-primary-mainBlue border-[1px] font-bold px-5 py-2 rounded-md"
             >
