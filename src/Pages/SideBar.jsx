@@ -8,6 +8,12 @@ const SideBar = ({ sidebarOpen }) => {
   const userRole = useSelector((state) => state.auth?.user?.role);
   const { pathname } = useLocation();
 
+  const logout = (e) => {
+    e.preventDefault();
+    localStorage.clear();
+    window.location.href = "/";
+  };
+
   return (
     <div className="flex flex-col md:w-[70%] mx-auto h-[100vh] py-5">
       <div className="flex flex-col gap-16 h-[95%]">
@@ -72,7 +78,10 @@ const SideBar = ({ sidebarOpen }) => {
       </div>
 
       <div className="logout ">
-        <div className="flex items-center gap-5 py-2 text-primary-mainBlue hover:bg-primary-mainGreen hover:text-white rounded-lg shadow-sm">
+        <div
+          className="flex items-center gap-5 py-2 text-primary-mainBlue hover:bg-primary-mainGreen hover:text-white rounded-lg shadow-sm cursor-pointer"
+          onClick={logout}
+        >
           <BiLogOut className="text-3xl" />
           {sidebarOpen ? (
             <div className="page uppercase text-xl ">Logout</div>

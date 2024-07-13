@@ -52,10 +52,74 @@ const campaignsApi = api.injectEndpoints({
         method: "PATCH",
       }),
     }),
+
+    // CAMPAIGN LIST
+    getCampaignList: builder.query({
+      query: () => ({
+        url: `/campaign-lists/list`,
+        method: "GET",
+      }),
+    }),
+    getCampaignListById: builder.query({
+      query: ({ id }) => ({
+        url: `/campaign-lists/find/id/${id}`,
+        method: "GET",
+      }),
+    }), //TODO: NO USE CASE
+    creatCampaignList: builder.mutation({
+      query: (data) => ({
+        url: "/campaign-lists/create",
+        method: "POST",
+        body: data,
+      }),
+    }),
+    updateCampaignList: builder.mutation({
+      query: ({ data, id }) => ({
+        url: `/campaign-lists/update/${id}`,
+        method: "PATCH",
+        body: data,
+      }),
+    }),
+    deleteCampaignList: builder.mutation({
+      query: (id) => ({
+        url: `/campaign-lists/delete/${id}`,
+        method: "DELETE", // PATCH
+      }),
+    }),
+    importSubscribers: builder.mutation({
+      query: (data) => ({
+        url: `/campaign-lists/upload-subscribers`,
+        method: "POST",
+        body: data,
+      }),
+    }),
+    getCampaignListSubscribers: builder.query({
+      query: (id) => ({
+        url: `/campaign-lists/list-subscribers/${id}`,
+        method: "GET",
+      }),
+    }),
+
+    //  SEND THE CAMPAIGN
+    sendCampaign: builder.mutation({
+      query: (data) => ({
+        url: "/campaigns/send",
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
 export const {
+  useGetCampaignListQuery,
+  useGetCampaignListByIdQuery,
+  useCreatCampaignListMutation,
+  useUpdateCampaignListMutation,
+  useDeleteCampaignListMutation,
+  useImportSubscribersMutation,
+  useLazyGetCampaignListSubscribersQuery,
+  //
   useGetCampaignQuery,
   useGetCampaignByIdQuery,
   useCreateCampaignMutation,
@@ -64,4 +128,7 @@ export const {
   useApproveCampaignMutation,
   usePublishCampaignMutation,
   useRejectCampaignMutation,
+
+  //
+  useSendCampaignMutation,
 } = campaignsApi;
